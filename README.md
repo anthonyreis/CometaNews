@@ -1,2 +1,1 @@
 # CometaNews
-# CometaNews
