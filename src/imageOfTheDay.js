@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-const apiKey = 'oaWnTtGm6tSiUIvgdLIWzB3zMeFFsCwNr9JOcYHL'
+const apiKey = require('../utils/apiKey')
 
 const getImageOfTheDay = (dateStart, dateEnd, callback) => {
 

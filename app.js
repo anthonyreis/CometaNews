@@ -3,9 +3,7 @@ const path = require('path')
 const bodyParser = require('body-parser')
 const getNasaImage = require('./src/nasaImages')
 const getImageOfTheDay = require('./src/imageOfTheDay')
-
-
-// api key = oaWnTtGm6tSiUIvgdLIWzB3zMeFFsCwNr9JOcYHL
+const corMassEject = require('./src/coronalMassEjection')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -23,6 +21,7 @@ app.get('/', (req, res) => {
     res.send('Olá, Mundo')
 })
 
+// API que pesquisa imagens com base nos dados fornecidos
 app.get('/search', (req, res) => {
     if (!req.query.q){
         return res.send({
@@ -40,10 +39,28 @@ app.get('/search', (req, res) => {
    
 })
 
+
+// API que retorna a imagem do dia caso não seja especificada data
+// ou retorna as imagens no intervalo especificado
 app.get('/imgday/:startDate?/:endDate?', (req, res) => {
     getImageOfTheDay(req.query.startDate, req.query.endDate, (error, result) => {
         if (error) {
             return res.send(error)
+        }
+
+        res.send(result)
+    })
+})
+
+// API que retorna se houve ejeção de massa coronaria no período fornecido
+// caso não seja informada data será retornado dos ultimos 30 dias
+app.get('/corMassEject/:startDate?/:endDate?', (req, res) => {
+    corMassEject(req.query.startDate, req.query.endDate, (error, result) => {
+        
+        if (error) {
+            return res.send(error)
+        } else if (!result.length){
+            return res.send('Não houve ejeção de massa coronaria nesse período!')
         }
 
         res.send(result)
