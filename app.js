@@ -8,6 +8,7 @@ const corMassEject = require('./src/coronalMassEjection')
 const starChart = require('./src/starChart')
 const getMoon = require('./src/moonPhase')
 const moonCalc = require('./src/moonCalc')
+const getNews = require('./src/spaceNews')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -98,6 +99,17 @@ app.get('/moonPhase', (req, res) => {
 app.get('/moonCalc', (req, res) => {
     moonCalc(req.query.lat, req.query.long, req.query.zoom, req.query.date, req.query.time, req.query.objectlevel, req.query.maptype, (error, result) => {
         if (error){
+            return res.send(error)
+        }
+
+        res.send(result)
+    })
+})
+
+// Retorna resumos de noticias, com link para a materia completa
+app.get('/spacenews', (req, res) => {
+    getNews((error, result) => {
+        if (error) {
             return res.send(error)
         }
 
