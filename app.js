@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const getNasaImage = require('./src/nasaImages')
 const getImageOfTheDay = require('./src/imageOfTheDay')
 const corMassEject = require('./src/coronalMassEjection')
+const starChart = require('./src/starChart')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -61,6 +62,17 @@ app.get('/corMassEject/:startDate?/:endDate?', (req, res) => {
             return res.send(error)
         } else if (!result.length){
             return res.send('Não houve ejeção de massa coronaria nesse período!')
+        }
+
+        res.send(result)
+    })
+})
+
+// Retorna o Chart da constelação de acordo com os dados fornecidos
+app.get('/starChart', (req, res) => {
+    starChart(req.query.style, req.query.lat, req.query.long, req.query.date, req.query.constellation, (error, result) => {
+        if (error){
+           return res.send(error)
         }
 
         res.send(result)
