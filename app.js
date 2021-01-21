@@ -68,7 +68,8 @@ app.get('/corMassEject/:startDate?/:endDate?', (req, res) => {
     })
 })
 
-app.get('/starChart/:style?/:lat/:long/:date/:constellation', (req, res) => {
+// Retorna o Chart da constelação de acordo com os dados fornecidos
+app.get('/starChart', (req, res) => {
     starChart(req.query.style, req.query.lat, req.query.long, req.query.date, req.query.constellation, (error, result) => {
         if (error){
            return res.send(error)

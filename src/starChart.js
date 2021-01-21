@@ -8,18 +8,19 @@ const url = 'https://api.astronomyapi.com/api/v2/studio/star-chart'
 const hash = b64.encode(`${applicationId}:${applicationSecret}`)
 
 const getChart = (style = "default",latitude, longitude, date, constellation, callback) => {
-
+   
     const headers = {
         headers: {
-            'Authorization': `Basic ${hash}`
+            'Authorization': `Basic ${hash}`,
+            "Content-Type": "application/json"
         }
     }
 
     const postData = {
         "style": style,
         "observer": {
-            "latitude": latitude,
-            "longitude": longitude,
+            "latitude": Number(latitude),
+            "longitude": Number(longitude),
             "date": date
         },
         "view": {
