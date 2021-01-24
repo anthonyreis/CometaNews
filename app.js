@@ -1,4 +1,5 @@
 const express = require('express')
+const hbs = require('hbs')
 const path = require('path')
 const bodyParser = require('body-parser')
 const fs = require('fs')
@@ -9,18 +10,24 @@ const starChart = require('./src/starChart')
 const getMoon = require('./src/moonPhase')
 const moonCalc = require('./src/moonCalc')
 const getNews = require('./src/spaceNews')
+const issPosition = require('./src/issPosition')
 
 const app = express()
 const port = process.env.PORT || 3000
 
-const publicDirectoryPath = path.join(__dirname, '../public')
+const publicDirectoryPath = path.join(__dirname, '/public')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: true
 }))
 
 app.use(express.static(publicDirectoryPath))
+const viewsPath = path.join(__dirname, '/templates/views')
+const imgPath = path.resolve(__dirname, 'public/issMapImg', 'issImg.jpg')
 
+
+app.set('view engine', 'hbs')
+app.set('views', viewsPath)
 
 app.get('/', (req, res) => {
     res.send('Olá, Mundo')
@@ -114,6 +121,18 @@ app.get('/spacenews', (req, res) => {
         }
 
         res.send(result)
+    })
+})
+
+app.get('/issPosition', (req, res) => {
+    issPosition( async (error, result) => {
+        if (error) {
+            return res.send(error)
+        }
+        await result.pipe(fs.createWriteStream(imgPath))
+        res.render('main', {
+            image: './issMapImg/issImg.jpg'
+        })
     })
 })
 
