@@ -13,7 +13,7 @@ const addInfo = async (original, moreInfo) => {
 
 const getMoreInfo = async (news) => {
     var moreInfo = []
-    for (const element of news ) {
+    for (const element of news ) {  
         const urlAbstract = `https://hubblesite.org/api/v3/news_release/${element.id}`
 
         var ret = await axios.get(urlAbstract).then( (response) => {

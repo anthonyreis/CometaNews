@@ -12,6 +12,7 @@ const moonCalc = require('./src/moonCalc')
 const getNews = require('./src/spaceNews')
 const issPosition = require('./src/issPosition')
 const getHubbleNews = require('./src/hubbleNews')
+const getDefinition = require('./src/glossary')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -69,7 +70,6 @@ app.get('/imgday/:startDate?/:endDate?', (req, res) => {
 // caso não seja informada data será retornado dos ultimos 30 dias
 app.get('/corMassEject/:startDate?/:endDate?', (req, res) => {
     corMassEject(req.query.startDate, req.query.endDate, (error, result) => {
-        
         if (error) {
             return res.send(error)
         } else if (!result.length){
@@ -82,6 +82,10 @@ app.get('/corMassEject/:startDate?/:endDate?', (req, res) => {
 
 // Retorna o Chart da constelação de acordo com os dados fornecidos
 app.get('/starChart', (req, res) => {
+    if (!req.query.style || !req.query.lat || !req.query.long || !req.query.date || !req.query.constellation) {
+        return res.send({ error: 'Está faltando algum parâmetro!' })
+    }
+
     starChart(req.query.style, req.query.lat, req.query.long, req.query.date, req.query.constellation, (error, result) => {
         if (error){
            return res.send(error)
@@ -93,6 +97,10 @@ app.get('/starChart', (req, res) => {
 
 // Retorna uma imagem da lua, de acordo com os dados informados
 app.get('/moonPhase', (req, res) => {
+    if (!req.query.style || !req.query.lat || !req.query.long || !req.query.date) {
+        return res.send({ error: 'Está faltando algum parâmetro!' })
+    }
+
     getMoon(req.query.style, req.query.lat, req.query.long, req.query.date, (error, result) => {
         if (error){
            return res.send(error)
@@ -105,6 +113,10 @@ app.get('/moonPhase', (req, res) => {
 
 // Retorna uma página html com as informações sobre a posição da lua
 app.get('/moonCalc', (req, res) => {
+    if (!req.query.lat || !req.query.long || !req.query.zoom || !req.query.date || !req.query.time || !req.query.objectlevel || !req.query.maptype){
+        return res.send({ error: 'Está faltando algum parâmetro!' })
+    }
+
     moonCalc(req.query.lat, req.query.long, req.query.zoom, req.query.date, req.query.time, req.query.objectlevel, req.query.maptype, (error, result) => {
         if (error){
             return res.send(error)
@@ -138,8 +150,20 @@ app.get('/issPosition', (req, res) => {
     })
 })
 
+// Traz uma coleção de noticias com resumo, imagem e link para a matéria completa
 app.get('/hubbleNews', (req, res) => {
     getHubbleNews((error, result) => {
+        if (error) {
+            return res.send(error)
+        }
+
+        res.send(result)
+    })
+})
+
+// Traz a definição de algum termo relacionado a astronomia
+app.get('/glossary/:term', (req, res) => {
+    getDefinition(req.params.term, (error, result) => {
         if (error) {
             return res.send(error)
         }
