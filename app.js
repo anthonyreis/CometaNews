@@ -11,6 +11,7 @@ const getMoon = require('./src/moonPhase')
 const moonCalc = require('./src/moonCalc')
 const getNews = require('./src/spaceNews')
 const issPosition = require('./src/issPosition')
+const getHubbleNews = require('./src/hubbleNews')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -124,6 +125,7 @@ app.get('/spacenews', (req, res) => {
     })
 })
 
+// Retorna um mapa que mostra a posição da ISS naquele momento
 app.get('/issPosition', (req, res) => {
     issPosition( async (error, result) => {
         if (error) {
@@ -133,6 +135,16 @@ app.get('/issPosition', (req, res) => {
         res.render('main', {
             image: './issMapImg/issImg.jpg'
         })
+    })
+})
+
+app.get('/hubbleNews', (req, res) => {
+    getHubbleNews((error, result) => {
+        if (error) {
+            return res.send(error)
+        }
+
+        res.send(result)
     })
 })
 
