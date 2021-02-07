@@ -1,0 +1,68 @@
+html{
+	background-color: #6a0dad;
+}
+.logo{
+	text-align: center;
+}
+.logo img{
+	position: relative;
+	height: 35px;
+	top: 40px;
+	clear: all;
+}
+.login{
+	position: relative;
+	width: 340px;
+	height: 426px;
+	padding-right: 40px;
+	padding-left: 40px;
+	margin: auto;
+	top: 80px;
+	background-color: white;
+}
+.login input{
+	width: 284px;
+	height: 20px;
+    margin-left: 10px;
+	border: 2px solid silver;
+	padding: 15px;
+}
+legend{
+	text-align: center;
+	font-size: 30px;
+	position: relative;
+	margin-bottom: 70px;
+    margin-left: 10px;
+	top: 30px;
+}
+
+label{
+    position: relative;
+    margin-left: 10px;
+}
+
+button{
+	background-color: #00cc66;
+	color: white;
+	border: 2px solid #00cc66;
+	text-align: center;
+	position: relative;
+	width: 318px;
+	height: 55px;
+	padding: 15px;
+	top: 20px;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+
+button:hover{
+	background-color: #009933;
+	border: 2px solid #009933;
+}
+span{
+	position: relative;
+	font-size: 18px;
+	color: white;
+	top: 60px;
+	left: 20px;
+}
