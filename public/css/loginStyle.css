@@ -10,7 +10,7 @@ html{
 	top: 40px;
 	clear: all;
 }
-.register{
+.login{
 	position: relative;
 	width: 340px;
 	height: 426px;
@@ -20,7 +20,7 @@ html{
 	top: 80px;
 	background-color: white;
 }
-.register input{
+.login input{
 	width: 284px;
 	height: 20px;
     margin-left: 10px;
@@ -64,5 +64,4 @@ span{
 	font-size: 18px;
 	color: white;
 	top: 60px;
-	left: 20px;
 }

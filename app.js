@@ -171,7 +171,7 @@ app.get('/glossary/:term', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    //res.render('login')
+    return res.render('login')
 })
 
 app.get('/register', (req, res) => {
