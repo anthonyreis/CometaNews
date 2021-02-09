@@ -176,8 +176,13 @@ app.get('/login', (req, res) => {
     return res.render('login')
 })
 
-app.post('/login', (req, res) => {
-   
+app.post('/login', async (req, res) => {
+   try {
+       const user = await login(req.body.email, req.body.password)
+       res.status(200).send(user)
+   } catch (e) {
+       res.status(500).send(e)
+   }
 })
 
 app.get('/register', (req, res) => {
@@ -186,8 +191,8 @@ app.get('/register', (req, res) => {
 
 app.post('/register', async (req, res) => {
     try {
-        await register({ email: req.body.email, password: req.body.password })
-        res.status(201).send()
+        const user = await register({ email: req.body.email, password: req.body.password })
+        res.status(201).send(user)
     } catch (e) {
         res.status(500).send(e)
     }
