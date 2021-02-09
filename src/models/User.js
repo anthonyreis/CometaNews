@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const validator = require('validator')
+const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
   email: {
@@ -11,7 +12,7 @@ const userSchema = new Schema({
     unique: true,
     validate(value) {
         if (!validator.isEmail(value)) {
-            throw new Error('Email is invalid')
+            throw new Error('Email inválido')
         }
     }
   },
@@ -24,7 +25,7 @@ const userSchema = new Schema({
       if (validator.contains(value.toLowerCase(), 'senha')){
           throw new Error('A senha não pode ter a palavra "senha".')
       }
-  }
+    }
   },
   date: { type: Date, default: Date.now}
 });

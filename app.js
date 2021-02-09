@@ -13,6 +13,8 @@ const getNews = require('./routes/spaceNews')
 const issPosition = require('./routes/issPosition')
 const getHubbleNews = require('./routes/hubbleNews')
 const getDefinition = require('./routes/glossary')
+const login = require('./routes/login')
+const register = require('./routes/register')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -174,8 +176,22 @@ app.get('/login', (req, res) => {
     return res.render('login')
 })
 
+app.post('/login', (req, res) => {
+   
+})
+
 app.get('/register', (req, res) => {
     return res.render('register')
+})
+
+app.post('/register', async (req, res) => {
+    try {
+        await register({ email: req.body.email, password: req.body.password })
+        res.status(201).send()
+    } catch (e) {
+        res.status(500).send(e)
+    }
+   
 })
 
 /*
