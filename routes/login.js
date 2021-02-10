@@ -1,14 +1,11 @@
-const User = require('../src/models/User')
+const User = require('../src/models/user')
 
-const login = async (email, password) => {
+const login = async (email, password, callback) => {
     try {
         const user = await User.findByCredentials(email, password)
-        return {
-            status: 200,
-            user
-        }
+        callback(undefined, user)
     }catch (e) {
-        return e
+       callback(e, undefined)
     }
 }
 

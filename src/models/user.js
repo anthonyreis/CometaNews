@@ -1,9 +1,8 @@
 const mongoose = require('mongoose')
-const Schema = mongoose.Schema;
 const validator = require('validator')
 const bcrypt = require('bcrypt')
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -30,17 +29,32 @@ const userSchema = new Schema({
   date: { type: Date, default: Date.now}
 });
 
+userSchema.methods.toJSON = function () {
+  const user = this
+  const userObject = user.toObject()
+
+  delete userObject.password
+
+  return userObject
+}
+
 userSchema.statics.findByCredentials = async (email, password) => {
   const user = await User.findOne({ email })
 
   if (!user) {
-      throw new Error('Unable to login')
+     return {
+       status: 401,
+       error: 'Credenciais incorretas!'
+     }
   }
 
   const isMatch = await bcrypt.compare(password, user.password)
 
   if (!isMatch) {
-      throw new Error('Unable to login')
+    return {
+      status: 401,
+      error: 'Credenciais incorretas!'
+    }
   }
 
   return user

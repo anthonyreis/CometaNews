@@ -1,3 +1,4 @@
+require('./db/mongoose.js')
 const express = require('express')
 const hbs = require('hbs')
 const path = require('path')
@@ -14,7 +15,7 @@ const issPosition = require('./routes/issPosition')
 const getHubbleNews = require('./routes/hubbleNews')
 const getDefinition = require('./routes/glossary')
 const login = require('./routes/login')
-const register = require('./routes/register')
+const register = require('./routes/registerNewsLetter')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -176,26 +177,38 @@ app.get('/login', (req, res) => {
     return res.render('login')
 })
 
-app.post('/login', async (req, res) => {
-   try {
-       const user = await login(req.body.email, req.body.password)
-       res.status(200).send(user)
-   } catch (e) {
-       res.status(500).send(e)
-   }
+app.post('/login', (req, res) => {
+    login(req.body.email, req.body.password, (error, result) => {
+        if (error) {
+            return res.status(500).send(error)
+        }
+
+        if (result.status && result.status != 200){
+            return res.status(result.status).send(result.error)
+        }     
+
+        return res.status(200).send(result)
+    })
+      
+   
 })
 
-app.get('/register', (req, res) => {
-    return res.render('register')
+app.get('/registerNewsLetter', (req, res) => {
+    return res.render('registerNewsLetter')
 })
 
-app.post('/register', async (req, res) => {
-    try {
-        const user = await register({ email: req.body.email, password: req.body.password })
-        res.status(201).send(user)
-    } catch (e) {
-        res.status(500).send(e)
-    }
+app.post('/registerNewsLetter', async (req, res) => {
+   register({ email: req.body.email }, (error, result) => {
+        if (error) {
+            return res.status(500).send(error)
+        }
+
+        if (result.status && result.status != 200){
+            return res.status(result.status).send(result.error)
+        }     
+
+        return res.status(200).send(result)
+   })       
    
 })
 
