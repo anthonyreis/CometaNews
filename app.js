@@ -212,6 +212,10 @@ app.post('/registerNewsLetter', async (req, res) => {
    
 })
 
+app.get('/ouvir/*', (req, res) => {
+    console.log(req.body)
+})
+
 /*
 app.get('/*', (req, res) => {
     res.render('404', {

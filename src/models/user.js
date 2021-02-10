@@ -48,14 +48,14 @@ userSchema.statics.findByCredentials = async (email, password) => {
      }
   }
 
-  const isMatch = await bcrypt.compare(password, user.password)
+  /*const isMatch = await bcrypt.compare(password, user.password)
 
   if (!isMatch) {
     return {
       status: 401,
       error: 'Credenciais incorretas!'
     }
-  }
+  }*/
 
   return user
 }
