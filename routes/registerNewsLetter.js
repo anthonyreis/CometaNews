@@ -1,18 +1,26 @@
+const express = require('express')
 const NewsLetter = require('../src/models/newsletter')
 
-const register = async (email, callback) => {
+const router = new express.Router()
+
+router.get('/registerNewsLetter', (req, res) => {
+    res.render('registerNewsLetter')
+})
+
+router.post('/registerNewsLetter', async (req, res) => {
     try {
-        const newsLetter = await NewsLetter.findByCredentials(email.email)
-        if (newsLetter.status == 404) {
-            const cadastro = new NewsLetter(email)
+        const newsLetter = await NewsLetter.findByCredentials(req.body.email)
+        
+        if (newsLetter.status && newsLetter.status == 404) {
+            const cadastro = new NewsLetter({email: req.body.email})
             await cadastro.save()
-            return callback(undefined, cadastro)
+            return res.status(200).send(cadastro)
         }
 
-        callback(undefined, newsLetter)
+        res.status(newsLetter.status).send(newsLetter.error)
     }catch (e) {
-       callback(e, undefined)
+       res.status(500).send(e)
     }
-}
+})      
 
-module.exports = register
+module.exports = router
