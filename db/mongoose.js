@@ -8,23 +8,20 @@ mongoose.connect('mongodb://127.0.0.1:27017/cometaNews', {
 })
 
 mongoose.connection.on('connected', function () {  
-     console.log('Mongoose default connection open to ' + 'mongodb://127.0.0.1:27017/cometaNews');
+     console.log('Conexão estabelecida e rodando em ' + 'mongodb://127.0.0.1:27017/cometaNews');
 }); 
    
-// If the connection throws an error
 mongoose.connection.on('error',function (err) {  
-     console.log('Mongoose default connection error: ' + err);
+     console.log('Erro de conexão no Mongoose: ' + err);
 }); 
    
-// When the connection is disconnected
 mongoose.connection.on('disconnected', function () {  
-     console.log('Mongoose default connection disconnected'); 
+     console.log('Conexão do Mongoose finalizada.'); 
 });
    
-// If the Node process ends, close the Mongoose connection 
 process.on('SIGINT', function() {  
      mongoose.connection.close(function () { 
-          console.log('Mongoose default connection disconnected through app termination'); 
+          console.log('Conexão do Mongoose terminada devido ao encerramento da aplicação.'); 
           process.exit(0); 
      }); 
 }); 
