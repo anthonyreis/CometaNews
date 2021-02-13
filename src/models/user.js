@@ -47,7 +47,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
        error: 'Credenciais incorretas!'
      }
   }
-
+  
   const isMatch = await bcrypt.compare(password, user.password)
 
   if (!isMatch) {

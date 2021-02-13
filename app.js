@@ -14,8 +14,8 @@ const getNews = require('./routes/spaceNews')
 const issPosition = require('./routes/issPosition')
 const getHubbleNews = require('./routes/hubbleNews')
 const getDefinition = require('./routes/glossary')
-const login = require('./routes/login')
-const register = require('./routes/registerNewsLetter')
+const loginRouter = require('./routes/login')
+const registerRouter = require('./routes/registerNewsLetter')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -33,6 +33,9 @@ const imgPath = path.resolve(__dirname, 'public/issMapImg', 'issImg.jpg')
 
 app.set('view engine', 'hbs')
 app.set('views', viewsPath)
+
+app.use(loginRouter)
+app.use(registerRouter)
 
 app.get('/', (req, res) => {
     res.send('Cometa News')
@@ -173,47 +176,11 @@ app.get('/glossary/:term', (req, res) => {
     })
 })
 
-app.get('/login', (req, res) => {
-    return res.render('login')
+app.get('/ouvir/*', (req, res) => {
+    console.log(req.body)
 })
 
-app.post('/login', (req, res) => {
-    login(req.body.email, req.body.password, (error, result) => {
-        if (error) {
-            return res.status(500).send(error)
-        }
-
-        if (result.status && result.status != 200){
-            return res.status(result.status).send(result.error)
-        }     
-
-        return res.status(200).send(result)
-    })
-      
-   
-})
-
-app.get('/registerNewsLetter', (req, res) => {
-    return res.render('registerNewsLetter')
-})
-
-app.post('/registerNewsLetter', async (req, res) => {
-   register({ email: req.body.email }, (error, result) => {
-        if (error) {
-            return res.status(500).send(error)
-        }
-
-        if (result.status && result.status != 200){
-            return res.status(result.status).send(result.error)
-        }     
-
-        return res.status(200).send(result)
-   })       
-   
-})
-
-/*
-app.get('/*', (req, res) => {
+/*app.get('/*', (req, res) => {
     res.render('404', {
         title: '404',
         error: 'Page not found'
