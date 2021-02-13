@@ -24,7 +24,7 @@ const GeraTTS = (synthesizeParams) => {
             throw err
         }
     }).catch(err => {
-        console.log('error:', err)  
+        return({ error: err })  
     })
 }
 
@@ -41,4 +41,6 @@ const playAudio = () => {
     })
 }
 
-module.exports = GeraTTS
+module.exports = {
+    GeraTTS
+} 

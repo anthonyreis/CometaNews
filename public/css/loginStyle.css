@@ -56,8 +56,9 @@ button.btnSubmit{
 }
 
 img.autoFalante{
-	width: 30px;
-	height: 30px;
+	width: 15px;
+	height: 15px;
+	margin-left: 5px;
 }
 
 button.btnSubmit:hover{

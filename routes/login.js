@@ -2,6 +2,7 @@ const express = require('express')
 const User = require('../src/models/user')
 const captcha = require("captcha-plus")
 const fs = require('fs')
+const playSound = require('../public/js/playSound')
 
 const router = new express.Router()
 
@@ -37,6 +38,17 @@ router.post('/login', async (req, res) => {
         console.log(e)
        res.status(400).send(e)
     }
+})
+
+router.get('/login/play/*', (req, res) => {
+    const synthesizeParams = {
+        text: req.params[0],
+        accept: 'audio/wav',
+        voice: 'pt-BR_IsabelaV3Voice',
+      }
+
+    playSound(synthesizeParams)
+    res.redirect('/login')
 })
 
 module.exports = router

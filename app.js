@@ -14,9 +14,7 @@ const getNews = require('./routes/spaceNews')
 const issPosition = require('./routes/issPosition')
 const getHubbleNews = require('./routes/hubbleNews')
 const getDefinition = require('./routes/glossary')
-//const login = require('./routes/login')
 const loginRouter = require('./routes/login')
-//const register = require('./routes/registerNewsLetter')
 const registerRouter = require('./routes/registerNewsLetter')
 
 const app = express()
@@ -182,12 +180,12 @@ app.get('/ouvir/*', (req, res) => {
     console.log(req.body)
 })
 
-app.get('/*', (req, res) => {
+/*app.get('/*', (req, res) => {
     res.render('404', {
         title: '404',
         error: 'Page not found'
     })
-})
+})*/
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
