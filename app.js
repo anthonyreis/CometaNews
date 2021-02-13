@@ -16,6 +16,7 @@ const getHubbleNews = require('./routes/hubbleNews')
 const getDefinition = require('./routes/glossary')
 const loginRouter = require('./routes/login')
 const registerRouter = require('./routes/registerNewsLetter')
+const playSound = require('./public/js/playSound')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -176,8 +177,20 @@ app.get('/glossary/:term', (req, res) => {
     })
 })
 
-app.get('/ouvir/*', (req, res) => {
-    console.log(req.body)
+app.get('/play/*', (req, res) => {
+    var pageIndex = req.params[0].indexOf('/')
+    var pageRedirect = '/' + req.params[0].substr(0, pageIndex)
+    var textParams = req.params[0].substr(pageIndex+1)
+    
+    const synthesizeParams = {
+        text: textParams,
+        accept: 'audio/wav',
+        voice: 'pt-BR_IsabelaV3Voice',
+      }
+
+    playSound(synthesizeParams)
+    res.redirect(pageRedirect)
+
 })
 
 /*app.get('/*', (req, res) => {
