@@ -1,12 +1,11 @@
 const express = require('express')
 const User = require('../src/models/user')
-const captcha = require("captcha-plus")
+//const captcha = require("captcha-plus")
 const fs = require('fs')
-const playSound = require('../public/js/playSound')
 
 const router = new express.Router()
 
-const Geracaptcha = async (id) => {
+/*const Geracaptcha = async (id) => {
     const code = captcha.convert(captcha.user(id).user).buffer
     
     const path = `./public/captcha/${id}.png`
@@ -18,7 +17,7 @@ const Geracaptcha = async (id) => {
     }).catch(e => {
        return e
     })
-}
+}*/
 
 router.get('/login', (req, res) => {
     res.render('login')
@@ -38,17 +37,6 @@ router.post('/login', async (req, res) => {
         console.log(e)
        res.status(400).send(e)
     }
-})
-
-router.get('/login/play/*', (req, res) => {
-    const synthesizeParams = {
-        text: req.params[0],
-        accept: 'audio/wav',
-        voice: 'pt-BR_IsabelaV3Voice',
-      }
-
-    playSound(synthesizeParams)
-    res.redirect('/login')
 })
 
 module.exports = router
