@@ -27,6 +27,13 @@ html{
 	border: 2px solid silver;
 	padding: 15px;
 }
+
+img.autoFalante{
+	width: 15px;
+	height: 15px;
+	margin-left: 5px;
+}
+
 legend{
 	text-align: center;
 	font-size: 30px;
