@@ -13,7 +13,6 @@ const textToSpeech = new TextToSpeechV1({
   })
 
 const GeraTTS = (synthesizeParams) => {
-
     textToSpeech.synthesize(synthesizeParams).then(response => {
         return textToSpeech.repairWavHeaderStream(response.result)
     }).then(buffer => {
