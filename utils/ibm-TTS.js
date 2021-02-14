@@ -4,12 +4,13 @@ const player = require('play-sound')(opts = {})
 var mp3Duration = require('mp3-duration');
 const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1')
 const { IamAuthenticator } = require('ibm-watson/auth')
+const { ibmKey } = require('./apiKey')
 
 const textToSpeech = new TextToSpeechV1({
     authenticator: new IamAuthenticator({
-      apikey: '67-EljzaI3Wij7h0h2Q01aTT_zdE1B7Ds_51RGF_WkvP',
+      apikey: ibmKey.apikey,
     }),
-    serviceUrl: 'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/64652127-c10f-4be8-84f4-bdaf1d667b14'
+    serviceUrl: ibmKey.serviceUrl
   })
 
 const GeraTTS = (synthesizeParams) => {

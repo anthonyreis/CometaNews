@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
         if(user.status && user.status != 200) {
            return res.status(user.status).send(user.error)
         }
-
+        
         res.status(200).send(user)
     }catch (e) {
         console.log(e)
