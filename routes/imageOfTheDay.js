@@ -1,11 +1,10 @@
 const axios = require('axios')
-
-const apiKey = require('../utils/apiKey')
+const { imageOfTheDayKey } = require('../utils/apiKey')
 
 const getImageOfTheDay = (dateStart, dateEnd, callback) => {
-
-    const url = dateStart ? `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&start_date=${dateStart}&end_date=${dateEnd}` 
-                            : `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`
+    
+    const url = dateStart ? `https://api.nasa.gov/planetary/apod?api_key=${imageOfTheDayKey}&start_date=${dateStart}&end_date=${dateEnd}` 
+                            : `https://api.nasa.gov/planetary/apod?api_key=${imageOfTheDayKey}`
    
     axios.get(url).then( (response) => {
 

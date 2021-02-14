@@ -1,12 +1,11 @@
 const axios = require('axios')
+const { issPositionKey } = require('../utils/apiKey')
 
 const url = 'https://api.wheretheiss.at/v1/satellites/25544'
 
-const apiKey = 'LjAFaySsnf0FhQifZZ0YlAsxDPDPec84'
-
 const mapIss = (lat, lon, callback) => {
     const headers = {'responseType': 'stream'}
-    const urlMap = `https://www.mapquestapi.com/staticmap/v5/map?key=${apiKey}&shape=radius:10km|${lat},${lon}&format=jpg&zoom=8&size=800,800&scalebar=true`
+    const urlMap = `https://www.mapquestapi.com/staticmap/v5/map?key=${issPositionKey}&shape=radius:10km|${lat},${lon}&format=jpg&zoom=8&size=800,800&scalebar=true`
 
     axios.get(urlMap, headers).then( (response) => {
         callback(undefined, response.data)
