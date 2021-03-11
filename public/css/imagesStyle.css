@@ -1,0 +1,12 @@
+html{
+	background-color: #6a0dad;
+}
+.logo{
+	text-align: center;
+}
+.logo img{
+	position: relative;
+	height: 35px;
+	top: 40px;
+	clear: all;
+}

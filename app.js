@@ -1,6 +1,6 @@
-require('./db/mongoose.js')
+const db = require('./db/mongoose.js')
 const express = require('express')
-const hbs = require('hbs')
+const ejs = require('ejs')
 const path = require('path')
 const bodyParser = require('body-parser')
 const fs = require('fs')
@@ -16,6 +16,7 @@ const getHubbleNews = require('./routes/hubbleNews')
 const getDefinition = require('./routes/glossary')
 const loginRouter = require('./routes/login')
 const registerRouter = require('./routes/registerNewsLetter')
+const imageRouter = require('./routes/images')
 const playSound = require('./public/js/playSound')
 
 const app = express()
@@ -32,11 +33,12 @@ const viewsPath = path.join(__dirname, '/templates/views')
 const imgPath = path.resolve(__dirname, 'public/issMapImg', 'issImg.jpg')
 
 
-app.set('view engine', 'hbs')
+app.set('view engine', 'ejs')
 app.set('views', viewsPath)
 
 app.use(loginRouter)
 app.use(registerRouter)
+app.use(imageRouter)
 
 app.get('/', (req, res) => {
     res.send('Cometa News')
@@ -187,18 +189,23 @@ app.get('/play/*', (req, res) => {
         accept: 'audio/wav',
         voice: 'pt-BR_IsabelaV3Voice',
       }
-
-    playSound(synthesizeParams)
+    
+    try {
+        playSound(synthesizeParams)
+    } catch (e) {
+        res.status(500).send({error: 'Não foi possível reproduzir o audio.'})
+    }
+    
     res.redirect(pageRedirect)
 
 })
 
-/*app.get('/*', (req, res) => {
+app.get('/*', (req, res) => {
     res.render('404', {
         title: '404',
         error: 'Page not found'
     })
-})*/
+})
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
